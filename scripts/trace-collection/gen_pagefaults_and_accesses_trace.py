@@ -18,26 +18,29 @@ def convert_addr_to_page(addr):
 
 memory_access = None
 pagefault = None
-
+unique_pagefaults = set()
 prev_addr = None
-with open('omnetpp-perf.log') as perf:
+with open('../../traces/raw_traces/mcf-perf.log') as perf:
     #if memory_access is None:
     #    memory_access = pin.readline()
     pagefault = perf.readline()
     while pagefault:
         pagefault = perf.readline()
-        if "omnetpp" not in pagefault:
+        if "mcf" not in pagefault:
             continue
         # Decide how to handle memory accesses.
         # Read pagefaults into a file and write 0 PC to it.
         pc=0
         try:
             page_address = pagefault.split()[6][6:]
+            unique_pagefaults.add(page_address)
         except IndexError:
             print("Error:", pagefault)
 
-        with open("page.txt", "a") as file:
+        with open("../../traces/final_traces/page.txt", "a") as file:
             try:
                 file.write((hex(0) + " " + hex(int(page_address , 16)) + "\n"))
             except:
                 print("Exception", pagefault)
+
+    print("Unique pages: ", len(unique_pagefaults))
