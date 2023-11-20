@@ -1,6 +1,6 @@
 prev_page_addr = None
-
-with open("page.txt", "r") as f_in, open("delta.txt", "w") as f_out:
+deltas = set()
+with open("../../traces/final_traces/page.txt", "r") as f_in, open("../../traces/final_traces/delta.txt", "w") as f_out:
     for line in f_in:
         elements = line.split()
         pc = int(elements[0], 16)
@@ -11,8 +11,10 @@ with open("page.txt", "r") as f_in, open("delta.txt", "w") as f_out:
             delta = (page_addr - prev_page_addr)//4096
             if delta == 0:
                 continue
+            deltas.add(delta)
             f_out.write(f"{hex(pc)} {delta}\n")
         else:
             f_out.write(f"{hex(pc)} {0}\n")
 
         prev_page_addr = page_addr
+    print("Unique deltas: ", len(deltas))

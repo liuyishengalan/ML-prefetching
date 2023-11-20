@@ -31,7 +31,6 @@ def main():
             # Convert delta into string
             pc = int(pc, 16)
             delta= ''.join(str(i) for i in delta)
-
             # Add the PC and delta and next delta to the list
             pc_delta_list.append([pc, delta])
 
