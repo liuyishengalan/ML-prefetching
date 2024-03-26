@@ -12,5 +12,5 @@ echo " page to delta done"
 # python3 delta2onehot.py
 # echo " delta to onehot done"
 # python3 modelGen.py
-python3 gencsv.py delta.txt traces.csv
+python3 gencsv.py ../../traces/final_traces/delta.txt ../../traces/final_traces/traces.csv
 echo "done"
